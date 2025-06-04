@@ -1,7 +1,7 @@
 
 # Webtrain
 
-Proyecto de fin de grado de Álvaro Fernandez de Alamo y Jesús Reinaldo Jourdain Gómez sobre gestion de rutinas,ejercicios y mas implementaciones externas.
+Proyecto de fin de grado de Álvaro Fernandez de Álamo y Jesús Reinaldo Jourdain Gómez sobre gestion de rutinas, ejercicios y más implementaciones externas.
 
 
 
