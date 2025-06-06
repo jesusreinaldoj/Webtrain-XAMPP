@@ -1,31 +1,55 @@
 <?php get_header(); ?>
 
 <!-- CONTENIDO PRINCIPAL -->
+ <div class="theme-switch">
+    <input type="checkbox" id="theme-toggle" name="theme-toggle">
+    <label for="theme-toggle"></label>
+    <span for="theme-toggle">Cambiar tema</span>
+</div>
 <div class="main-container">
     <!-- PANEL IZQUIERDO -->
     <div class="left-panel">
-        <h1 class="mb-4">Selecciona un grupo muscular</h1>
-        <select id="grupoMuscular" class="mb-4">
-            <option value="">-- Elige una opción --</option>
-            <option value="chest">Pecho</option>
-            <option value="back">Espalda</option>
-            <option value="legs">Piernas</option>
-            <option value="arms">Brazos</option>
-            <option value="abs">Abdomen</option>
-            <option value="shoulders">Hombros</option>
-            <option value="gluteus">Glúteos</option>
-        </select>
+
+        <div class="row mb-4 w-100">
+            <div class="col-md-6">
+                <h1 class="mb-2">Grupos principales:</h1>
+                <select id="grupoMuscular" class="form-select">
+                    <option value="">-- Elige una opción --</option>
+                    <option value="chest">Pecho</option>
+                    <option value="back">Espalda</option>
+                    <option value="legs">Piernas</option>
+                    <option value="arms">Brazos</option>
+                    <option value="abs">Abdomen</option>
+                    <option value="shoulders">Hombros</option>
+                    <option value="gluteus">Glúteos</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <h1 class="mb-2">Subgrupos:</h1>
+                <select id="subGrupos" class="form-select">
+                    <option value="">-- Elige una opción --</option>
+                    <option value="chest">Pecho</option>
+                    <option value="back">Espalda</option>
+                    <option value="legs">Piernas</option>
+                    <option value="arms">Brazos</option>
+                    <option value="abs">Abdomen</option>
+                    <option value="shoulders">Hombros</option>
+                    <option value="gluteus">Glúteos</option>
+                </select>
+            </div>
+        </div>
 
         <!-- Aquí se cargarán las tarjetas de ejercicios -->
         <div id="cards-container" class="row row-cols-1 row-cols-md-2 g-4"></div>
     </div>
 
     <!-- PANEL DERECHO -->
+     
+    <!-- AÑADIR IMAGEN DEL CORAZON PARA IMPLEMENTAR LA OPCION DE CARDIO DE LA API -->
+
     <div class="right-panel">
-        <img id="muscle-image" src="<?php echo get_template_directory_uri(); ?>/IMG/MuscleGroupBaseImageTransparentBackground.png" class="imagen-cuerpo" alt="Silueta cuerpo humanoq" usemap="#cuerpo">
-        <!-- <img src="./IMG/MuscleGroupBaseImageTransparentBackground.png" alt="Silueta cuerpo humano" class="imagen-cuerpo" usemap="#cuerpo" /> -->
+        <img id="muscle-image" src="<?php echo esc_url(get_template_directory_uri()); ?>/IMG/MuscleGroupBaseImageTransparentBackground.png" class="imagen-cuerpo" alt="Silueta cuerpo humanoq" usemap="#cuerpo">
         <map name="cuerpo">
-            <area alt="Cabeza" title="Cabeza" onclick="mostrarEjercicios()" coords="431,169,528,169,541,267,535,321,491,324,428,314,415,245" shape="poly" />
             <area alt="Biceps" title="Biceps" onclick="mostrarEjercicios('upper%20arms')" coords="297,577,275,640,253,654,239,642,244,588,263,547,285,537,293,554" shape="poly">
             <area alt="Biceps" title="Biceps" onclick="mostrarEjercicios('upper%20arms')" coords="678,536,668,573,685,626,700,649,723,653,725,624,721,593,713,571,696,546" shape="poly">
             <area alt="Pecho" title="Pecho" onclick="mostrarEjercicios('chest')" coords="434,420,454,425,468,445,471,459,475,479,475,498,473,518,470,538,461,557,443,571,417,574,393,574,370,569,354,557,348,542,339,523,339,505,339,482,341,466,348,449,363,437,375,430,388,423,409,420" shape="poly">
@@ -39,5 +63,27 @@
         </map>
     </div>
 </div>
+
+
+
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Check local storage for theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.checked = true;
+    }
+
+    themeToggle.addEventListener('change', () => {
+        if (themeToggle.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+</script>
 
 <?php get_footer(); ?>

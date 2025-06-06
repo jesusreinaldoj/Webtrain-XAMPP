@@ -5,7 +5,7 @@
     <div class="left-panel">
         <h1>¡Página no encontrada!</h1>
         <p>Lo sentimos, pero la página que buscas no existe o ha sido movida.</p>
-        <a href="<?php echo home_url(); ?>" class="btn btn-primary">Volver al inicio</a>
+        <a href="<?php echo esc_url(home_url()); ?>" class="btn btn-primary">Volver al inicio</a>
     </div>
 
     <!-- PANEL DERECHO -->

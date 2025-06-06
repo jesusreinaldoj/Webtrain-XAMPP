@@ -99,14 +99,12 @@
         }
     });
 
-    // Cambia TU_API_KEY_AQUI por tu clave real de RapidAPI
     document.getElementById('grupoMuscular').addEventListener('change', async function() {
         const muscle = this.value;
         if (!muscle) return;
 
         const url = `https://muscle-group-image-generator.p.rapidapi.com/getImage?muscleGroups=${encodeURIComponent(muscle)}&color=200%2C100%2C80&transparentBackground=1`;
 
-        // Efecto de actualización (opcional: desvanecer la imagen)
         const img = document.getElementById('muscle-image');
         img.style.opacity = 0.5;
 
@@ -119,17 +117,17 @@
                 }
             });
             if (!response.ok) throw new Error('Error al obtener la imagen');
-            const data = await response.json();
-
-            // Actualiza la imagen
-            img.src = data.imageUrl;
+            const blob = await response.blob();
+            img.src = URL.createObjectURL(blob);
             img.onload = () => {
                 img.style.opacity = 1;
-            }; // Vuelve a mostrar la imagen al cargar
+            };
         } catch (error) {
             console.error(error);
             img.style.opacity = 1;
         }
+        
+        mostrarEjercicios(muscle);
     });
 </script>
 <?php wp_footer(); ?>

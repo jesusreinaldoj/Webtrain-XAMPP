@@ -12,11 +12,12 @@
 
 </head>
 
-<body>
+<body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #ffe6e6;">
         <div class="container-fluid px-4">
-            <a class="navbar-brand fw-bold" href="#"><?php bloginfo('name'); ?></a>
+            <a class="navbar-brand fw-bold" href="<?php echo esc_url(home_url()); ?>"><?php bloginfo('name'); ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

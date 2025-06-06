@@ -6,14 +6,40 @@ Author URI: https://webtrain.infinityfreeapp.com/?i=1
 Description: Un tema hecho a mano para un trabajo de fin de grado.
 Text Domain: webtrain-plantilla
 Version: 1.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 7.4
+Tested up to: 6.8
 */
 
+* {
+    scrollbar-width: thin; /* Para navegadores compatibles con scrollbar-width */
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+html {
+    overflow: hidden; /* Oculta el scroll visible */
+}
 
 body {
     margin: 0;
     padding-top: 70px;
     background-color: #f2f2f2;
     font-family: 'Poppins', sans-serif;
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+    height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+}
+
+body::after {
+    content: '';
+    display: block;
+    height: 100%;
+    overflow-y: scroll; /* Permite el desplazamiento */
+    visibility: hidden; /* Oculta el scroll visualmente */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .main-container {
@@ -45,6 +71,10 @@ body {
 .imagen-cuerpo {
     max-width: 100%;
     height: auto;
+    /* Animación al cargar */
+    opacity: 0;
+    transform: translateY(-40px);
+    animation: fadeDown 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
 }
 
 
@@ -116,4 +146,175 @@ footer {
     border: 1px solid #ccc !important;
     opacity: 1 !important;
     visibility: visible !important;
+}
+
+/* Estilos para el interruptor de tema */
+.theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+    margin: 20px;
+}
+
+.theme-switch input {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.theme-switch label {
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+    background: #ccc;
+    display: block;
+    border-radius: 25px;
+    position: relative;
+}
+
+.theme-switch label::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    background: #fff;
+    border-radius: 21px;
+    transition: 0.3s;
+}
+
+.theme-switch input:checked + label {
+    background: #4cafad;
+}
+
+.theme-switch input:checked + label::after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+
+/* Tema oscuro */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .left-panel {
+    background-color: #1e1e1e;
+    /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); */
+}
+
+body.dark-mode .right-panel {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode select {
+    background-color: #2e2e2e;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+body.dark-mode h1 {
+    color: #4cafad;
+}
+
+/* Estilos para el scroll en el tema oscuro */
+body.dark-mode {
+    scrollbar-width: thin !important; /* Ancho del scroll */
+    scrollbar-color: #4cafad #121212 !important; /* Color del scroll y del fondo en tema oscuro */
+}
+
+/* Para navegadores basados en Webkit (Chrome, Edge, Safari) en tema oscuro */
+body.dark-mode::-webkit-scrollbar {
+    width: 8px !important; /* Ancho del scroll */
+}
+
+body.dark-mode::-webkit-scrollbar-track {
+    background: #121212 !important; /* Fondo del track en tema oscuro */
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+    background-color: #4cafad !important; /* Color del scroll */
+    border-radius: 10px !important; /* Bordes redondeados */
+    border: 2px solid #121212 !important; /* Espaciado entre el scroll y el track */
+}
+
+/* Para navegadores basados en Webkit (Chrome, Edge, Safari) */
+body::-webkit-scrollbar {
+    width: 8px; /* Ancho del scroll */
+}
+
+body::-webkit-scrollbar-track {
+    background: #f2f2f2; /* Fondo del track */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #d6336c; /* Color del scroll */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid #f2f2f2; /* Espaciado entre el scroll y el track */
+}
+
+@keyframes fadeDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-down {
+    animation: fadeDown 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.fade-down-delayed {
+    animation: fadeDown 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+.left-panel h1 {
+    /* Animación para los títulos */
+    opacity: 0;
+    transform: translateY(-40px);
+    animation: fadeDown 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+.left-panel select {
+    /* Animación para los selects */
+    opacity: 0;
+    transform: translateY(-40px);
+    animation: fadeDown 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.wp-caption {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.wp-caption-text {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.sticky {
+    background-color: #ffe6e6;
+    border: 2px solid #d6336c;
+}
+
+.alignright {
+    float: right;
+    margin-left: 20px;
+}
+
+.alignleft {
+    float: left;
+    margin-right: 20px;
+}
+
+.aligncenter {
+    display: block;
+    margin: 0 auto;
 }
