@@ -13,28 +13,26 @@
 
 
     // Función para obtener todos los ejercicios desde una API y mostrarlos en tarjetas Bootstrap
-    async function mostrarEjercicios(muscle) {
+    async function mostrarEjerciciosPorPrincipal(muscle) {
         const contenedor = document.getElementById("cards-container");
         contenedor.innerHTML = ""; // limpiar
-        try {
-            let response;
-            try {
-                let url = 'proxy-ejercicios.php';
-                if (muscle) {
-                    url += '?muscle=' + encodeURIComponent(muscle);
-                }
-                response = await fetch(url);
-                if (!response.ok) throw new Error();
-            } catch {
-                let url = './proxy-ejercicios.php';
-                if (muscle) {
-                    url += '?muscle=' + encodeURIComponent(muscle);
-                }
-                response = await fetch(url);
+
+        // Lista de músculos que son 'target' en la API
+        const targets = ["abs", "triceps", "biceps", "calves", "forearms", "glutes", "lats", "levator scapulae", "pectorals", "serratus anterior", "spine", "traps", "upper back"];
+
+        let url = 'proxy-ejercicios.php';
+        if (muscle) {
+            if (targets.includes(muscle.toLowerCase())) {
+                url += '?target=' + encodeURIComponent(muscle);
+            } else {
+                url += '?muscle=' + encodeURIComponent(muscle);
             }
+        }
+
+        try {
+            let response = await fetch(url);
             if (!response.ok) throw new Error("Error al obtener ejercicios");
             let ejercicios = await response.json();
-
 
             // Si la respuesta es un objeto con .data.exercises, usa ese array
             if (ejercicios && typeof ejercicios === 'object' && ejercicios.data && Array.isArray(ejercicios.data.exercises)) {
@@ -67,6 +65,8 @@
             console.error(error);
         }
     }
+
+    
 
     function alertar() {
         alert("CONNECTED TO THE HEAD!");
@@ -127,7 +127,7 @@
             img.style.opacity = 1;
         }
         
-        mostrarEjercicios(muscle);
+        mostrarEjerciciosPorPrincipal(muscle);
     });
 </script>
 <?php wp_footer(); ?>
