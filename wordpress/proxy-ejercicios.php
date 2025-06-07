@@ -7,9 +7,14 @@ header('Access-Control-Allow-Origin: *');
 $api_key = '3081e5bec3msha179d7ec17edeedp1c8c6ajsna037a270bb12';
 
 // Permitir recibir el nombre del músculo por GET
-$muscle = isset($_GET['muscle']) ? urlencode($_GET['muscle']) : '';
 
-if ($muscle) {
+$muscle = isset($_GET['muscle']) ? urlencode($_GET['muscle']) : '';
+$target = isset($_GET['target']) ? urlencode($_GET['target']) : '';
+
+if ($target) {
+    // Si se pasa un target, usarlo en la URL
+    $url = "https://exercisedb.p.rapidapi.com/exercises/target/{$target}?limit=10&offset=0";
+} elseif ($muscle) {
     // Si se pasa un músculo, usarlo en la URL
     $url = "https://exercisedb.p.rapidapi.com/exercises/bodyPart/{$muscle}?limit=10&offset=0";
 } else {
