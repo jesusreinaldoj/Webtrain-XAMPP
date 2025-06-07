@@ -3,9 +3,32 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Noticias Personalizadas</h1>
 
-    <?php if (have_posts()) : ?>
+    <?php 
+    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+    $args = [
+        'post_type' => 'article',
+        'posts_per_page' => 12,
+        'meta_key' => 'publishedAt',
+        'orderby' => 'meta_value',
+        'order' => 'DESC',
+        'paged' => $paged,
+    ];
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) : 
+        $urls_vistos = [];
+        ?>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <?php while (have_posts()) : the_post(); ?>
+            <?php
+            while ($query->have_posts()) : $query->the_post();
+                $url = get_post_meta(get_the_ID(), 'url', true);
+                if (in_array($url, $urls_vistos)) {
+                    continue;
+                }
+                $urls_vistos[] = $url;
+            ?>
                 <div class="col">
                     <div class="card h-100">
                         <?php if (get_post_meta(get_the_ID(), 'urlToImage', true)) : ?>
@@ -27,7 +50,7 @@
                             <p class="card-text"><?php the_excerpt(); ?></p>
                         </div>
                         <div class="card-footer">
-                            <a href="<?php echo esc_url(get_post_meta(get_the_ID(), 'url', true)); ?>" class="btn btn-primary" target="_blank">Leer más</a>
+                            <a href="<?php echo esc_url($url); ?>" class="btn btn-primary" target="_blank">Leer más</a>
                         </div>
                     </div>
                 </div>
@@ -36,17 +59,20 @@
 
         <div class="mt-4">
             <?php
-            // Paginación
-            the_posts_pagination(array(
+            echo paginate_links([
+                'total' => $query->max_num_pages,
+                'current' => $paged,
                 'mid_size' => 2,
                 'prev_text' => __('« Anterior', 'textdomain'),
                 'next_text' => __('Siguiente »', 'textdomain'),
-            ));
+            ]);
             ?>
         </div>
     <?php else : ?>
         <p class="text-center">No se encontraron noticias personalizadas.</p>
-    <?php endif; ?>
+    <?php endif; 
+    wp_reset_postdata();
+    ?>
 </div>
 
 <?php get_footer(); ?>
