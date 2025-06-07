@@ -4,7 +4,13 @@ Plugin Name: Noticias Personalizadas
 Description: Plugin hecho por Webtrain para añadir noticias por api
 Author: Webtrain
 */
-// Hook ht_custom_post_custom_article() to the init action hook
+// Hook ht_custom_post_custom_article() to the init action 
+
+function ht_normalizar_url($url) {
+    // Elimina parámetros de la URL y barras finales
+    return rtrim(strtok($url, '?'), '/');
+}
+
 add_action( 'init', 'ht_custom_post_custom_article' );
 // The custom function to register a custom article post type
 function ht_custom_post_custom_article() {
@@ -118,7 +124,7 @@ function ht_guardar_metadatos_article($post_id) {
 add_action('save_post', 'ht_guardar_metadatos_article');
 
 function ht_importar_noticias_desde_api() {
-    $url = 'https://newsapi.org/v2/everything?q=fitness&apiKey=c61fbc34a413458bb22d99412d0819c1';
+    $url = 'https://newsapi.org/v2/everything?q=fitness&apiKey=c61fbc34a413458bb22d99412d0819c1&language=es';
 
     $respuesta = wp_remote_get($url, array(
         'headers' => array(
@@ -134,39 +140,38 @@ function ht_importar_noticias_desde_api() {
     $cuerpo = wp_remote_retrieve_body($respuesta);
     $datos = json_decode($cuerpo, true);
 
-    error_log('Respuesta API completa: ' . print_r($datos, true));
-
     if (!isset($datos['articles'])) {
         error_log('Respuesta inesperada de la API. No se encontró "articles".');
         return;
     }
 
     foreach ($datos['articles'] as $noticia) {
-        // Verificamos si ya existe un post con esa URL (para evitar duplicados)
+        $url_original = $noticia['url'] ?? '';
+        $url_normalizada = ht_normalizar_url($url_original);
+
+        // Verificar si ya existe una noticia con esa URL normalizada
         $existe = new WP_Query([
             'post_type' => 'article',
             'meta_key' => 'url',
-            'meta_value' => $noticia['url'],
+            'meta_value' => $url_normalizada,
             'posts_per_page' => 1
         ]);
 
         if ($existe->have_posts()) {
-            continue; // Saltamos si ya existe
+            continue; // Saltar si ya existe
         }
 
-        error_log('Insertando: ' . $noticia['title']);
-
         $post_id = wp_insert_post([
-            'post_title'  => wp_strip_all_tags($noticia['title']),
-            'post_type'   => 'article',
-            'post_status' => 'publish',
-            'post_content'=> $noticia['content'] ?? '',
+            'post_title'    => wp_strip_all_tags($noticia['title']),
+            'post_type'     => 'article',
+            'post_status'   => 'publish',
+            'post_content'  => $noticia['content'] ?? '',
         ]);
 
         if (!is_wp_error($post_id)) {
             update_post_meta($post_id, 'author', $noticia['author'] ?? '');
             update_post_meta($post_id, 'description', $noticia['description'] ?? '');
-            update_post_meta($post_id, 'url', $noticia['url'] ?? '');
+            update_post_meta($post_id, 'url', $url_normalizada); // Guardar URL normalizada
             update_post_meta($post_id, 'urlToImage', $noticia['urlToImage'] ?? '');
             update_post_meta($post_id, 'publishedAt', $noticia['publishedAt'] ?? '');
             update_post_meta($post_id, 'content', $noticia['content'] ?? '');
