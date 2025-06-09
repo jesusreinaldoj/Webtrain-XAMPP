@@ -318,3 +318,14 @@ body::-webkit-scrollbar-thumb {
     display: block;
     margin: 0 auto;
 }
+
+body.admin-bar .navbar.fixed-top {
+    top: 32px; /* para escritorio */
+}
+
+@media screen and (max-width: 782px) {
+    body.admin-bar .navbar.fixed-top {
+        top: 46px; /* para móviles */
+    }
+}
+
