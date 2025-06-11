@@ -93,6 +93,8 @@ define( 'WP_DEBUG_DISPLAY', true );
 define('FS_METHOD', 'direct');
 define('WP_HOME', 'http://localhost/wordpress');
 define('WP_SITEURL', 'http://localhost/wordpress');
+define('UPLOADS', 'wp-content/uploads');
+
 
 /* That's all, stop editing! Happy publishing. */
 

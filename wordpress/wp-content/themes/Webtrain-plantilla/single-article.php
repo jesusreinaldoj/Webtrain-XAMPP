@@ -30,6 +30,13 @@
             </a>
         </p>
 
+        <?php
+                if (comments_open() || get_comments_number()) :
+                    comments_template();
+                endif;
+    
+        ?>
+
     <?php endwhile; else: ?>
         <p>No se encontró la noticia.</p>
     <?php endif; ?>

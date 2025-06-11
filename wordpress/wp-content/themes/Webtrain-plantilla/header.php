@@ -34,4 +34,6 @@
                 ?>
             </div>
         </div>
+        <?php get_search_form(); ?>
+
     </nav>

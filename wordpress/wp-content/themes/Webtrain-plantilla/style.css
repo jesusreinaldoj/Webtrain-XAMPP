@@ -329,3 +329,28 @@ body.admin-bar .navbar.fixed-top {
     }
 }
 
+.search-form {
+    max-width: 400px; /* Ajusta el ancho máximo de la barra de búsqueda */
+    margin: 0 auto; /* Centra la barra de búsqueda */
+}
+
+.search-field {
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.search-field:focus {
+    outline: none;
+    border-color: #d6336c; /* Color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(214, 51, 108, 0.5); /* Sombra al enfocar */
+}
+
+.btn-primary {
+    background-color: #d6336c; /* Color del botón */
+    border-color: #d6336c;
+}
+
+.btn-primary:hover {
+    background-color: #b52a5a; /* Color del botón al pasar el cursor */
+    border-color: #b52a5a;
+}
