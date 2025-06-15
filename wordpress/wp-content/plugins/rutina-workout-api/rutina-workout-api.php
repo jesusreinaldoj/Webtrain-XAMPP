@@ -100,13 +100,13 @@ function rutina_form_shortcode()
                 html += `<p>No se han generado ejercicios aún. Por favor, espera unos segundos y vuelve a intentarlo.</p>`;
             } else {
                 rutina.exercises.forEach((dia, index) => {
-                    html += `<div class="mb-3"><h4>Día ${index + 1} - ${dia.day}</h4><ul>`;
+                    html += `<div class="mb-3 card"><div class="card-body"><h4 class="card-title">Día ${index + 1} - ${dia.day}</h4><ul class="class="card-title"">`;
                     if (Array.isArray(dia.exercises)) {
                         dia.exercises.forEach(ejercicio => {
                             html += `<li><strong>${ejercicio.name}</strong> - ${ejercicio.sets} sets x ${ejercicio.repetitions} repeticiones (${ejercicio.duration}, equipo: ${ejercicio.equipment})</li>`;
                         });
                     }
-                    html += "</ul></div>";
+                    html += "</ul></div></div>";
                 });
             }
 
@@ -232,13 +232,13 @@ function mostrar_rutinas_usuario()
             echo '<p>No hay ejercicios disponibles para esta rutina.</p>';
         } else {
             foreach ($rutina['exercises'] as $dia_index => $dia) {
-                echo '<div><strong>Día ' . ($dia_index + 1) . ' - ' . esc_html($dia['day']) . '</strong><ul>';
+                echo '<div class="card mb-3"><div class="card-body"><strong>Día ' . ($dia_index + 1) . ' - ' . esc_html($dia['day']) . '</strong><ul>';
                 if (isset($dia['exercises']) && is_array($dia['exercises'])) {
                     foreach ($dia['exercises'] as $ejercicio) {
                         echo '<li><strong>' . esc_html($ejercicio['name']) . '</strong> - ' . esc_html($ejercicio['sets']) . ' sets x ' . esc_html($ejercicio['repetitions']) . ' repeticiones (' . esc_html($ejercicio['duration']) . ', equipo: ' . esc_html($ejercicio['equipment']) . ')</li>';
                     }
                 }
-                echo '</ul></div>';
+                echo '</ul></div></div>';
             }
         }
         echo '</div>';
