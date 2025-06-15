@@ -1,7 +1,7 @@
 /*
 Theme Name: webtrain-plantilla
 Theme URI: https://webtrain.infinityfreeapp.com/?i=1
-Author: Jesús Reinaldo y Álvaro Fernandez
+Author: Jesús Reinaldo y Álvaro Fernández
 Author URI: https://webtrain.infinityfreeapp.com/?i=1
 Description: Un tema hecho a mano para un trabajo de fin de grado.
 Text Domain: webtrain-plantilla
@@ -353,4 +353,30 @@ body.admin-bar .navbar.fixed-top {
 .btn-primary:hover {
     background-color: #b52a5a; /* Color del botón al pasar el cursor */
     border-color: #b52a5a;
+}
+
+#cardio-image {
+    position:absolute;
+    left: 72.5%;
+    top: 17%;
+    z-index: 2;
+    max-width: 4%;
+    cursor: pointer;
+    animation: fadeDownCardio 1.5s ease;
+    transition: max-width 0.3s ease;
+}
+
+#cardio-image:hover {
+    max-width: 5%; /* Aumenta el tamaño al pasar el cursor */
+}
+
+@keyframes fadeDownCardio {
+    0% {
+        opacity: 0;
+        top: 11%; /* o ajusta según tu diseño */
+    }
+    100% {
+        opacity: 1;
+        top: 17%;
+    }
 }
